@@ -1,11 +1,15 @@
 const Story = require('../models/Story')
 
+// @desc    Login/Landing page
+// @route   GET /
 exports.login = (req, res) => {
     res.render('login', {
         layout: 'login'
     })
 }
 
+// @desc    Dashboard
+// @route   GET /dashboard
 exports.dashboard = async (req, res) => {
     try {
         const stories = await Story.find({ user: req.user.id }).lean()

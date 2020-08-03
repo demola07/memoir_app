@@ -9,12 +9,8 @@ const router = express.Router()
 // @route   GET /auth/google
 router.route('/google').get(passport.authenticate('google', { scope: ['profile'] }))
 
-// @desc    Google auth Callback
-// @route   GET /auth/google/callback
 router.route('/google/callback').get(passport.authenticate('google', { failureRedirect: '/', }), googleCallback)
 
-// @desc    Logout
-// @route   GET /auth/logout
 router.route('/logout').get(logout)
 
 

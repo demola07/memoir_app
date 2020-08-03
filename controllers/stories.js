@@ -1,9 +1,13 @@
 const Story = require('../models/Story')
 
+// @desc    Show add page
+// @route   GET /stories/add
 exports.getAddStoriesPage = (req, res) => {
     res.render('stories/add')
 }
 
+// @desc    Process add form
+// @route   POST /stories
 exports.createStories = async (req, res) => {
     try {
         req.body.user = req.user.id
@@ -15,6 +19,8 @@ exports.createStories = async (req, res) => {
     }
 }
 
+// @desc    Show all stories
+// @route   GET /stories
 exports.getAllStories = async (req, res) => {
     try {
         const stories = await Story.find({ status: 'public' }).populate('user').sort({ createdAt: 'desc' }).lean()
@@ -28,6 +34,8 @@ exports.getAllStories = async (req, res) => {
     }
 }
 
+// @desc    Show single story
+// @route   GET /stories/:id
 exports.getSingleStory = async (req, res) => {
     try {
         let story = await Story.findById(req.params.id)
@@ -48,6 +56,8 @@ exports.getSingleStory = async (req, res) => {
     }
 }
 
+// @desc    Show edit page
+// @route   GET /stories/edit/:id
 exports.editStory = async (req, res) => {
     try {
         const story = await Story.findOne({ _id: req.params.id }).lean()
@@ -70,6 +80,8 @@ exports.editStory = async (req, res) => {
 
 }
 
+// @desc    Update Story
+// @route   PUT /stories/:id
 exports.updateStory = async (req, res) => {
     try {
         let story = await Story.findById(req.params.id).lean()
@@ -94,6 +106,8 @@ exports.updateStory = async (req, res) => {
 
 }
 
+// @desc    Delete Story
+// @route   DELETE /stories/:id
 exports.deleteStory = async (req, res) => {
     try {
         await Story.remove({ _id: req.params.id })
@@ -104,6 +118,8 @@ exports.deleteStory = async (req, res) => {
     }
 }
 
+// @desc    User stories
+// @route   GET /stories/add
 exports.getUserStories = async (req, res) => {
     try {
         const stories = await Story.find({ user: req.params.userId, status: 'public' })
