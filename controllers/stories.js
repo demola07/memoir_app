@@ -28,6 +28,26 @@ exports.getAllStories = async (req, res) => {
     }
 }
 
+exports.getSingleStory = async (req, res) => {
+    try {
+        let story = await Story.findById(req.params.id)
+            .populate('user')
+            .lean()
+
+        if (!story) {
+            return res.render('error/404')
+        }
+
+        res.render('stories/show', {
+            story
+        })
+
+    } catch (err) {
+        console.error(err)
+        res.render('error/404')
+    }
+}
+
 exports.editStory = async (req, res) => {
     try {
         const story = await Story.findOne({ _id: req.params.id }).lean()
@@ -81,5 +101,20 @@ exports.deleteStory = async (req, res) => {
     } catch (err) {
         console.error(err);
         return res.render('error/500')
+    }
+}
+
+exports.getUserStories = async (req, res) => {
+    try {
+        const stories = await Story.find({ user: req.params.userId, status: 'public' })
+            .populate('user')
+            .lean()
+
+        res.render('stories/index', {
+            stories
+        })
+    } catch (err) {
+        console.error(err)
+        res.render('error/500')
     }
 }
