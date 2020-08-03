@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAddStoriesPage, createStories, getAllStories, editStory } = require('../controllers/stories')
+const { getAddStoriesPage, createStories, getAllStories, editStory, updateStory } = require('../controllers/stories')
 const { ensureAuth } = require('../middleware/auth')
 
 const router = express.Router()
@@ -20,6 +20,12 @@ router.route('/').get(ensureAuth, getAllStories)
 // @desc    Show edit page
 // @route   GET /stories/edit/:id
 router.route('/edit/:id').get(ensureAuth, editStory)
+
+// @desc    Update Story
+// @route   PUT /stories/:id
+router.route('/:id').put(ensureAuth, updateStory)
+
+
 
 
 
