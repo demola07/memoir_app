@@ -60,5 +60,14 @@ exports.updateStory = async (req, res) => {
         })
         res.redirect('/dashboard')
     }
+}
 
+exports.deleteStory = async (req, res) => {
+    try {
+        await Story.remove({ _id: req.params.id })
+        res.redirect('/dashboard')
+    } catch (err) {
+        console.error(err);
+        return res.render('error/500')
+    }
 }

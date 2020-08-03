@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAddStoriesPage, createStories, getAllStories, editStory, updateStory } = require('../controllers/stories')
+const { getAddStoriesPage, createStories, getAllStories, editStory, updateStory, deleteStory } = require('../controllers/stories')
 const { ensureAuth } = require('../middleware/auth')
 
 const router = express.Router()
@@ -25,10 +25,8 @@ router.route('/edit/:id').get(ensureAuth, editStory)
 // @route   PUT /stories/:id
 router.route('/:id').put(ensureAuth, updateStory)
 
-
-
-
-
-
+// @desc    Delete Story
+// @route   DELETE /stories/:id
+router.route('/:id').delete(ensureAuth, deleteStory)
 
 module.exports = router
